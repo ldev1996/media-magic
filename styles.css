@@ -201,22 +201,22 @@
     display: block;
 }
 
-.media-magic-nickname-modal {
+.media-magic-alias-modal {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.media-magic-nickname-modal h2 {
+.media-magic-alias-modal h2 {
     margin-bottom: 4px;
 }
 
-.media-magic-nickname-input {
+.media-magic-alias-input {
     width: 100%;
     box-sizing: border-box;
 }
 
-.media-magic-nickname-buttons {
+.media-magic-alias-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 8px;

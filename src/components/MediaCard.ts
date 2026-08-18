@@ -3,7 +3,7 @@ import { Media, RatingValue, Status } from "../types";
 import { MediaMagicSettings } from "../settings";
 import { resolveMediaTitle, resolveRating, resolveStatusIcon } from "../functions";
 
-class NicknameModal extends Modal {
+class AliasModal extends Modal {
     private value = "";
     private onSubmit: (value: string) => void;
 
@@ -21,22 +21,22 @@ class NicknameModal extends Modal {
         const { contentEl } = this;
 
         contentEl.empty();
-        contentEl.addClass("media-magic-nickname-modal");
+        contentEl.addClass("media-magic-alias-modal");
 
         contentEl.createEl("h2", {
-            text: "Set nickname"
+            text: "Set alias"
         });
 
         const input = contentEl.createEl("input", {
             type: "text",
-            placeholder: "Enter a nickname",
-            cls: "media-magic-nickname-input"
+            placeholder: "Enter an alias",
+            cls: "media-magic-alias-input"
         });
 
         input.value = this.value;
 
         const buttons = contentEl.createDiv({
-            cls: "media-magic-nickname-buttons"
+            cls: "media-magic-alias-buttons"
         });
 
         const cancelButton = buttons.createEl("button", {
@@ -144,9 +144,9 @@ export class MediaCard {
 
         menu.addItem(item =>
             item
-                .setTitle("Set nickname")
+                .setTitle("Set alias")
                 .setIcon("pencil")
-                .onClick(() => this.openNicknameModal(media))
+                .onClick(() => this.openAliasModal(media))
         );
 
         menu.addItem(item =>
@@ -176,13 +176,13 @@ export class MediaCard {
         menu.showAtMouseEvent(event);
     }
 
-    private openNicknameModal(media: Media): void {
-        new NicknameModal(
+    private openAliasModal(media: Media): void {
+        new AliasModal(
             this.app,
-            media.nickname ?? "",
-            async (nickname) => {
+            media.alias ?? "",
+            async (alias) => {
                 await this.updateFrontmatter(media, {
-                    nickname: nickname || undefined
+                    alias: alias || undefined
                 });
             }
         ).open();

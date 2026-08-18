@@ -19,7 +19,7 @@ export interface Media {
     title: string;
     englishTitle?: string;
     nativeTitle?: string;
-    nickname?: string;
+    alias?: string;
 
     type: MediaType;
     creators: string[];

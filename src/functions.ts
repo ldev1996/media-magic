@@ -40,8 +40,8 @@ const statusIcons = {
 
 // ---------------------------------------------------- Export Functions
 export function resolveMediaTitle(media: Media, settings: MediaMagicSettings): string {
-    if (media.nickname?.trim()) {
-        return media.nickname.trim();
+    if (media.alias?.trim()) {
+        return media.alias.trim();
     }
     return titleResolvers[settings.titleLanguage](media);
 }

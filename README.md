@@ -86,7 +86,7 @@ You can enable or disable this content according to your preferences.
 
 ## Installation
 
-You can also install Media Magic manually by downloading the latest release and placing the plugin files in your vault's plugin directory:
+You can install Media Magic manually by downloading the latest release and placing the plugin files in your vault's plugin directory:
 
 ```text
 .obsidian/plugins/media-magic/

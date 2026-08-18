@@ -27,7 +27,7 @@ export class MediaRepository {
                 title: fm.title,
                 englishTitle: fm.englishTitle,
                 nativeTitle: fm.nativeTitle,
-                nickname: fm.nickname,
+                alias: fm.alias,
 
                 type: fm.type,
                 creators: fm.creators ?? [],

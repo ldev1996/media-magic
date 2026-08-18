@@ -119,7 +119,7 @@ export class MediaView extends ItemView {
                 const q = this.filters.query.toLowerCase();
 
                 const match = [
-                    m.nickname,
+                    m.alias,
                     m.title,
                     m.englishTitle,
                     m.nativeTitle
