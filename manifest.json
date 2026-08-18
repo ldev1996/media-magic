@@ -1,0 +1,9 @@
+{
+	"id": "media-magic",
+	"name": "Media Magic",
+	"version": "0.1.0",
+	"minAppVersion": "1.5.0",
+	"description": "Anime and manga library for Obsidian.",
+	"author": "Ldev",
+	"isDesktopOnly": false
+}
