@@ -1,6 +1,7 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
 import MediaMagicPlugin from './main';
 import { MEDIA_VIEW_TYPE, MediaView } from './components/MediaView';
+import { MediaType } from './types';
 
 export enum RatingDisplay {
 	Numeric = "numeric",
@@ -39,6 +40,7 @@ export interface MediaMagicSettings {
 	// Display
 	ratingDisplay: RatingDisplay;
 	titleLanguage: TitleLanguage;
+	defaultMediaType: MediaType;
 
 	// Covers
 	coverMode: CoverMode;
@@ -61,6 +63,7 @@ export const DEFAULT_SETTINGS: MediaMagicSettings = {
 	// Display
 	ratingDisplay: RatingDisplay.Stars,
 	titleLanguage: TitleLanguage.Canonical,
+	defaultMediaType: "anime",
 
 	// Covers
 	coverMode: CoverMode.Link,
@@ -212,6 +215,20 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 						view?.onSettingsChange();
 					})
 			);
+
+		new Setting(containerEl)
+			.setName("Default media type")
+			.setDesc("Select which media type is selected when opening the Media Magic View.")
+			.addDropdown(dropdown => {
+				dropdown
+					.addOption("anime", "Anime")
+					.addOption("manga", "Manga")
+					.setValue(this.plugin.settings.defaultMediaType)
+					.onChange(async value => {
+						this.plugin.settings.defaultMediaType = value as MediaType;
+						await this.plugin.saveSettings();
+					});
+			});
 
 		// -------------------------------------------- Covers
 		containerEl.createEl("h2", {

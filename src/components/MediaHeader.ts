@@ -9,7 +9,7 @@ import { resolveRating } from "../functions";
 
 export interface MediaFilters {
     query: string;
-    type: string | null;
+    type: string;
     status: Status | null;
     rating: RatingValue | "unrated" | null;
 }
@@ -67,7 +67,6 @@ export class MediaHeader {
         // TYPE
         this.typeSelect = bottom.createEl("select", { cls: "media-magic-select" });
         [
-            { value: "", label: "All types" },
             { value: "anime", label: "Anime" },
             { value: "manga", label: "Manga" }
         ].forEach(({ value, label }) => {
@@ -106,7 +105,7 @@ export class MediaHeader {
         const emitFilters = () => {
             this.onFilter({
                 query: this.searchEl?.value ?? "",
-                type: this.typeSelect?.value || null,
+                type: this.typeSelect?.value || "anime",
                 status: (this.statusSelect?.value as Status) || null,
                 rating: this.ratingSelect?.value
                     ? (this.ratingSelect.value === "unrated"

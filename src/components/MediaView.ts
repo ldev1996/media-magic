@@ -33,7 +33,7 @@ export class MediaView extends ItemView {
 
     private filters: MediaFilters = {
         query: "",
-        type: null,
+        type: this.settings.defaultMediaType,
         status: null,
         rating: null
     };
