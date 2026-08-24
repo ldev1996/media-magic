@@ -37,15 +37,10 @@ export class ImportMediaModal extends Modal {
 
     onOpen(): void {
         const { contentEl } = this;
-
         contentEl.empty();
-
-        contentEl.createEl("h2", {
-            text: "Add Media"
-        });
+        contentEl.addClass("media-magic-import-modal");
 
         this.buildProviderSelector(contentEl);
-
         this.buildSearchField(contentEl);
 
         this.resultsContainer = contentEl.createDiv({
@@ -69,8 +64,7 @@ export class ImportMediaModal extends Modal {
         containerEl: HTMLElement
     ): void {
         new Setting(containerEl)
-            .setName("Provider")
-            .setDesc("Select a source")
+            .setName("Add Media From")
 
             .addDropdown(dropdown => {
                 const providers =

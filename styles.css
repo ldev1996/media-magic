@@ -3,6 +3,11 @@
 }
 
 /* --------------------------------------- Add Media */
+.media-magic-import-modal {
+    padding-top: 1rem;
+    padding-bottom: 0;
+}
+
 .media-magic-results {
     margin-top: 1rem;
 }
