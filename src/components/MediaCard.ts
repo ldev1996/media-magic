@@ -2,6 +2,7 @@ import { App, Menu, Modal, TFile, setIcon } from "obsidian";
 import { Media, RatingValue, Status } from "../types";
 import { MediaMagicSettings } from "../settings";
 import { resolveMediaTitle, resolveRating, resolveStatusIcon } from "../functions";
+import { t } from "../i18n/i18n";
 
 class AliasModal extends Modal {
     private value = "";
@@ -24,12 +25,12 @@ class AliasModal extends Modal {
         contentEl.addClass("media-magic-alias-modal");
 
         contentEl.createEl("h2", {
-            text: "Set alias"
+            text: t("card.setAlias")
         });
 
         const input = contentEl.createEl("input", {
             type: "text",
-            placeholder: "Enter an alias",
+            placeholder: t("card.placeholder"),
             cls: "media-magic-alias-input"
         });
 
@@ -40,7 +41,7 @@ class AliasModal extends Modal {
         });
 
         const cancelButton = buttons.createEl("button", {
-            text: "Cancel"
+            text: t("card.cancel")
         });
 
         cancelButton.addEventListener("click", () => {
@@ -48,7 +49,7 @@ class AliasModal extends Modal {
         });
 
         const saveButton = buttons.createEl("button", {
-            text: "Save",
+            text: t("card.save"),
             cls: "mod-cta"
         });
 
@@ -115,7 +116,7 @@ export class MediaCard {
             });
 
             setIcon(iconEl, resolveStatusIcon(media.status));
-            badge.createSpan({ text: media.status });
+            badge.createSpan({ text: t(`status.${media.status}`) });
         }
 
         if (media.rating) {
@@ -144,21 +145,21 @@ export class MediaCard {
 
         menu.addItem(item =>
             item
-                .setTitle("Set alias")
+                .setTitle(t("card.setAlias"))
                 .setIcon("pencil")
                 .onClick(() => this.openAliasModal(media))
         );
 
         menu.addItem(item =>
             item
-                .setTitle("Change rating")
+                .setTitle(t("card.setRating"))
                 .setIcon("star")
                 .onClick(() => this.openRatingMenu(media, event))
         );
 
         menu.addItem(item =>
             item
-                .setTitle("Change status")
+                .setTitle(t("card.setStatus"))
                 .setIcon("circle")
                 .onClick(() => this.openStatusMenu(media, event))
         );
@@ -167,7 +168,7 @@ export class MediaCard {
 
         menu.addItem(item =>
             item
-                .setTitle("Delete")
+                .setTitle(t("card.delete"))
                 .setIcon("trash")
                 .setWarning(true)
                 .onClick(() => this.deleteMedia(media))
@@ -190,15 +191,11 @@ export class MediaCard {
 
     private openRatingMenu(media: Media, event: MouseEvent): void {
         const menu = new Menu();
-        const labels = ["Awesome", "Good", "Ok", "Weak", "Bad"];
 
         for (let i = 5; i >= 1; i--) {
-            const label =
-                `${resolveRating(i as RatingValue, this.settings.ratingDisplay)} | ${labels[5 - i]}`;
-
             menu.addItem(item =>
                 item
-                    .setTitle(label)
+                    .setTitle(resolveRating(i as RatingValue, this.settings.ratingDisplay))
                     .setChecked(media.rating === i)
                     .onClick(async () => {
                         await this.updateFrontmatter(media, {
@@ -212,7 +209,7 @@ export class MediaCard {
 
         menu.addItem(item =>
             item
-                .setTitle("Clear rating")
+                .setTitle(t("card.clearRating"))
                 .setIcon("x")
                 .setWarning(true)
                 .onClick(async () => {
@@ -231,7 +228,7 @@ export class MediaCard {
         for (const status of this.getAvailableStatuses(media)) {
             menu.addItem(item =>
                 item
-                    .setTitle(status)
+                    .setTitle(t(`status.${status}`))
                     .setIcon(resolveStatusIcon(status))
                     .setChecked(media.status === status)
                     .onClick(async () => {

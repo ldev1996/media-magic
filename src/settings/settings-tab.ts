@@ -3,6 +3,7 @@ import { MEDIA_VIEW_TYPE, MediaView } from '../components/MediaView';
 import MediaMagicPlugin from '../main';
 import { MediaType } from '../types';
 import { CoverMode, OnDuplicateAction, RatingDisplay, TitleLanguage } from './enums';
+import { t } from '../i18n/i18n';
 
 export class MediaMagicSettingTab extends PluginSettingTab {
     plugin: MediaMagicPlugin;
@@ -19,11 +20,11 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 
         // -------------------------------------------- Query
         containerEl.createEl("h2", {
-            text: "Query"
+            text: t("settings.query")
         });
 
         new Setting(containerEl)
-            .setName("Show Adult Content")
+            .setName(t("settings.showAdultContent"))
             .addToggle(toggle => {
                 toggle
                     .setValue(this.plugin.settings.showAdult)
@@ -35,11 +36,11 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 
         // -------------------------------------------- Files
         containerEl.createEl("h2", {
-            text: "Files"
+            text: t("settings.files")
         });
 
         new Setting(containerEl)
-            .setName("Anime Folder")
+            .setName(t("settings.animeFolder"))
             .addText(text =>
                 text
                     .setPlaceholder("Media/Anime")
@@ -51,7 +52,7 @@ export class MediaMagicSettingTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
-            .setName("Manga Folder")
+            .setName(t("settings.mangaFolder"))
             .addText(text =>
                 text
                     .setPlaceholder("Media/Manga")
@@ -63,20 +64,20 @@ export class MediaMagicSettingTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
-            .setName("On Duplicate")
+            .setName(t("settings.onDuplicate"))
             .addDropdown(dropdown =>
                 dropdown
                     .addOption(
                         OnDuplicateAction.Ask,
-                        "Ask"
+                        t("onDuplicate.ask")
                     )
                     .addOption(
                         OnDuplicateAction.Overwrite,
-                        "Overwrite"
+                        t("onDuplicate.overwrite")
                     )
                     .addOption(
                         OnDuplicateAction.Ignore,
-                        "Ignore"
+                        t("onDuplicate.ignore")
                     )
                     .setValue(this.plugin.settings.onDuplicate)
                     .onChange(async value => {
@@ -87,28 +88,28 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 
         // -------------------------------------------- Display
         containerEl.createEl("h2", {
-            text: "Display"
+            text: t("settings.display")
         });
 
         new Setting(containerEl)
-            .setName("Rating Display")
+            .setName(t("settings.ratingDisplay"))
             .addDropdown(dropdown =>
                 dropdown
                     .addOption(
-                        RatingDisplay.Stars,
-                        "Stars"
+                        RatingDisplay.Numeric,
+                        t("RatingDisplay.numeric")
                     )
                     .addOption(
                         RatingDisplay.Emoji,
-                        "Emoji"
+                        t("RatingDisplay.emoji")
                     )
                     .addOption(
-                        RatingDisplay.Numeric,
-                        "Numeric"
+                        RatingDisplay.Stars,
+                        t("RatingDisplay.stars")
                     )
                     .addOption(
                         RatingDisplay.Tier,
-                        "Tier"
+                        t("RatingDisplay.tier")
                     )
                     .setValue(this.plugin.settings.ratingDisplay)
                     .onChange(async value => {
@@ -121,20 +122,20 @@ export class MediaMagicSettingTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
-            .setName("Title Language")
+            .setName(t("settings.titleLanguage"))
             .addDropdown(dropdown =>
                 dropdown
                     .addOption(
                         TitleLanguage.Canonical,
-                        "Canonical"
+                        t("titleLanguage.canonical")
                     )
                     .addOption(
                         TitleLanguage.English,
-                        "English"
+                        t("titleLanguage.english")
                     )
                     .addOption(
                         TitleLanguage.Native,
-                        "Native"
+                        t("titleLanguage.native")
                     )
                     .setValue(this.plugin.settings.titleLanguage)
                     .onChange(async value => {
@@ -147,12 +148,13 @@ export class MediaMagicSettingTab extends PluginSettingTab {
             );
 
         new Setting(containerEl)
-            .setName("Default media type")
+            .setName(t("settings.defaultMediaType"))
             .setDesc("Select which media type is selected when opening the Media Magic View.")
             .addDropdown(dropdown => {
                 dropdown
-                    .addOption("anime", "Anime")
-                    .addOption("manga", "Manga")
+                    .addOption("anime", t("media.anime"))
+                    .addOption("manga", t("media.manga"))
+                    // .addOption("game", t("media.game"))
                     .setValue(this.plugin.settings.defaultMediaType)
                     .onChange(async value => {
                         this.plugin.settings.defaultMediaType = value as MediaType;
@@ -162,24 +164,24 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 
         // -------------------------------------------- Covers
         containerEl.createEl("h2", {
-            text: "Covers"
+            text: t("settings.covers")
         });
 
         new Setting(containerEl)
-            .setName("Cover Mode")
+            .setName(t("settings.coverMode"))
             .addDropdown(dropdown =>
                 dropdown
                     .addOption(
                         CoverMode.Download,
-                        "Download covers"
+                        t("coverMode.download")
                     )
                     .addOption(
                         CoverMode.Link,
-                        "Use URLs"
+                        t("coverMode.link")
                     )
                     .addOption(
                         CoverMode.Skip,
-                        "Don't use covers"
+                        t("coverMode.skip")
                     )
                     .setValue(this.plugin.settings.coverMode)
                     .onChange(async value => {
@@ -192,7 +194,7 @@ export class MediaMagicSettingTab extends PluginSettingTab {
         if (this.plugin.settings.coverMode === CoverMode.Download) {
 
             new Setting(containerEl)
-                .setName("Anime Covers Folder")
+                .setName(t("settings.animeCoversFolder"))
                 .addText(text =>
                     text
                         .setPlaceholder("Media/Covers/Anime")
@@ -204,7 +206,7 @@ export class MediaMagicSettingTab extends PluginSettingTab {
                 );
 
             new Setting(containerEl)
-                .setName("Manga Covers Folder")
+                .setName(t("settings.mangaCoversFolder"))
                 .addText(text =>
                     text
                         .setPlaceholder("Media/Covers/Manga")
@@ -218,11 +220,11 @@ export class MediaMagicSettingTab extends PluginSettingTab {
 
         // -------------------------------------------- Misc
         containerEl.createEl("h2", {
-            text: "Misc"
+            text: t("settings.misc")
         });
 
         new Setting(containerEl)
-            .setName("Open on Startup")
+            .setName(t("settings.openOnStartup"))
             .addToggle(toggle =>
                 toggle
                     .setValue(this.plugin.settings.openOnStartup)

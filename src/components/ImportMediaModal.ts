@@ -14,6 +14,7 @@ import {
 } from "../types";
 import { resolveMediaTitle } from "../functions";
 import { MediaMagicSettings } from "../settings";
+import { t } from "../i18n/i18n";
 
 export class ImportMediaModal extends Modal {
     private provider?: MediaProvider;
@@ -64,7 +65,7 @@ export class ImportMediaModal extends Modal {
         containerEl: HTMLElement
     ): void {
         new Setting(containerEl)
-            .setName("Add Media From")
+            .setName(t("import.addMediaFrom"))
 
             .addDropdown(dropdown => {
                 const providers =
@@ -72,7 +73,7 @@ export class ImportMediaModal extends Modal {
 
                 dropdown.addOption(
                     "none",
-                    "None"
+                    "???"
                 )
 
                 providers.forEach(provider => {
@@ -110,13 +111,13 @@ export class ImportMediaModal extends Modal {
         containerEl: HTMLElement
     ): void {
         new Setting(containerEl)
-            .setName("Search")
+            .setName(t("import.search"))
 
             .addText(text => {
                 this.searchInput = text;
 
                 text.setPlaceholder(
-                    "Search..."
+                    t("import.searchPlaceholder")
                 );
 
                 text.onChange(value => {
@@ -137,7 +138,8 @@ export class ImportMediaModal extends Modal {
 
             .addButton(button => {
                 button
-                    .setButtonText("Search")
+                    .setButtonText(t("import.search"))
+                    .setClass("mod-cta")
                     .onClick(async () => {
                         await this.search();
                     });
@@ -150,7 +152,7 @@ export class ImportMediaModal extends Modal {
     private async search(): Promise<void> {
         if (!this.provider) {
             new Notice(
-                "No provider selected"
+                t("error.noProvider")
             );
 
             return;
@@ -165,7 +167,7 @@ export class ImportMediaModal extends Modal {
         this.resultsContainer.empty();
 
         this.resultsContainer.createEl("p", {
-            text: "Searching..."
+            text: t("import.searching")
         });
 
         try {
@@ -184,7 +186,7 @@ export class ImportMediaModal extends Modal {
             this.resultsContainer.createEl(
                 "p",
                 {
-                    text: "Search failed"
+                    text: t("error.searchError")
                 }
             );
         }
@@ -200,7 +202,7 @@ export class ImportMediaModal extends Modal {
             this.resultsContainer.createEl(
                 "p",
                 {
-                    text: "No results"
+                    text: t("error.noResults")
                 }
             );
 
@@ -260,7 +262,7 @@ export class ImportMediaModal extends Modal {
 
         const button =
             actions.createEl("button", {
-                text: "Import"
+                text: t("import.import")
             });
 
         button.addEventListener(
@@ -293,7 +295,9 @@ export class ImportMediaModal extends Modal {
             await this.onImport(media);
 
             new Notice(
-                `${resolveMediaTitle(media, this.settings)} imported`
+                t("import.imported", {
+                    title: resolveMediaTitle(media, this.settings)
+                })
             );
 
             this.close();
@@ -301,7 +305,7 @@ export class ImportMediaModal extends Modal {
             console.error(error);
 
             new Notice(
-                "Import failed"
+                t("error.importError")
             );
         }
     }

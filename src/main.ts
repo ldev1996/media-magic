@@ -7,6 +7,7 @@ import { MediaImporter } from "./classes/MediaImporter";
 import { AniListAnimeProvider } from "./providers/AniListAnimeProvider";
 import { MEDIA_VIEW_TYPE, MediaView } from "./components/MediaView";
 import { AniListMangaProvider } from "./providers/AniListMangaProvider";
+import { initI18n } from "./i18n/i18n";
 
 export default class MediaMagicPlugin extends Plugin {
 	settings!: MediaMagicSettings;
@@ -15,6 +16,7 @@ export default class MediaMagicPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+		initI18n();
 
 		this.importer = new MediaImporter(this.app, this.settings);
 		this.providerRegistry = new ProviderRegistry();

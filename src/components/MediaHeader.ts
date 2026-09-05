@@ -6,6 +6,7 @@ import { MediaImporter } from "../classes/MediaImporter";
 import { ImportMediaModal } from "./ImportMediaModal";
 import { MediaStatsModal } from "./MediaStatsModal";
 import { resolveRating } from "../functions";
+import { t } from "../i18n/i18n";
 
 export interface MediaFilters {
     query: string;
@@ -38,7 +39,7 @@ export class MediaHeader {
         // SEARCH
         this.searchEl = top.createEl("input", {
             type: "text",
-            placeholder: "Search…"
+            placeholder: t("import.searchPlaceholder")
         });
         this.searchEl.value = currentFilters.query;
 
@@ -67,8 +68,8 @@ export class MediaHeader {
         // TYPE
         this.typeSelect = bottom.createEl("select", { cls: "media-magic-select" });
         [
-            { value: "anime", label: "Anime" },
-            { value: "manga", label: "Manga" }
+            { value: "anime", label: t("media.anime") },
+            { value: "manga", label: t("media.manga") }
         ].forEach(({ value, label }) => {
             const opt = this.typeSelect!.createEl("option", { text: label });
             opt.value = value;
@@ -78,8 +79,8 @@ export class MediaHeader {
         // STATUS
         this.statusSelect = bottom.createEl("select", { cls: "media-magic-select" });
         [
-            { value: "", label: "All statuses" },
-            ...Object.values(Status).map(s => ({ value: s, label: s }))
+            { value: "", label: t("status.all") },
+            ...Object.values(Status).map(s => ({ value: s, label: t(`status.${s}`) }))
         ].forEach(({ value, label }) => {
             const opt = this.statusSelect!.createEl("option", { text: label });
             opt.value = value;
@@ -89,8 +90,8 @@ export class MediaHeader {
         // RATING
         this.ratingSelect = bottom.createEl("select", { cls: "media-magic-select" });
         [
-            { value: "", label: "All ratings" },
-            { value: "unrated", label: "Unrated" },
+            { value: "", label: t("rating.all") },
+            { value: "unrated", label: t("rating.none") },
             ...[5, 4, 3, 2, 1].map(i => ({
                 value: String(i),
                 label: resolveRating(i as RatingValue, this.settings.ratingDisplay)

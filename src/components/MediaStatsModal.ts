@@ -2,6 +2,7 @@ import { App, Modal, setIcon } from "obsidian";
 import { Media, Status, RatingValue, MediaType } from "../types";
 import { resolveStatusIcon, resolveRating } from "../functions";
 import { MediaMagicSettings } from "../settings";
+import { t } from "../i18n/i18n";
 
 export class MediaStatsModal extends Modal {
     constructor(
@@ -16,11 +17,13 @@ export class MediaStatsModal extends Modal {
         const el = this.contentEl;
         el.empty();
 
-        el.createEl("h2", { text: "Statistics" });
+        el.createEl("h2", {
+            text: t("stats.stats")
+        });
 
         const stats = this.computeStats();
 
-        this.renderGridSection("By Type", stats.byType);
+        this.renderTypeSection(stats.byType);
         this.renderRatingSection(stats.byRating);
         this.renderStatusSection(stats.byStatus);
     }
@@ -105,21 +108,24 @@ export class MediaStatsModal extends Modal {
     // -------------------------
     // SECTIONS
     // -------------------------
-    private renderGridSection(
-        title: string,
-        data: Record<string, number>
-    ) {
-        this.contentEl.createEl("h3", { text: title });
+    private renderTypeSection(data: Record<MediaType, number>) {
+        this.contentEl.createEl("h3", {
+            text: t("stats.byType")
+        });
 
         const grid = this.createGrid();
 
-        for (const [key, value] of Object.entries(data)) {
-            this.createCard(grid, key, value);
+        for (const [type, value] of Object.entries(data) as [MediaType, number][]) {
+            this.createCard(
+                grid,
+                t(`media.${type}`),
+                value
+            );
         }
     }
 
     private renderRatingSection(data: Record<RatingValue | "unrated", number>) {
-        this.contentEl.createEl("h3", { text: "By Rating" });
+        this.contentEl.createEl("h3", { text: t("stats.byRating") });
 
         const grid = this.createGrid();
 
@@ -129,7 +135,7 @@ export class MediaStatsModal extends Modal {
         ][]) {
             const label =
                 key === "unrated"
-                    ? "Unrated"
+                    ? t("rating.none")
                     : resolveRating(key, this.settings.ratingDisplay);
 
             this.createCard(grid, label, value);
@@ -137,14 +143,16 @@ export class MediaStatsModal extends Modal {
     }
 
     private renderStatusSection(data: Record<Status, number>) {
-        this.contentEl.createEl("h3", { text: "By Status" });
+        this.contentEl.createEl("h3", {
+            text: t("stats.byStatus")
+        });
 
         const grid = this.createGrid();
 
         for (const [status, value] of Object.entries(data) as [Status, number][]) {
             this.createCard(
                 grid,
-                status,
+                t(`status.${status}`),
                 value,
                 resolveStatusIcon(status),
             );
