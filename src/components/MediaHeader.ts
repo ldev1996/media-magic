@@ -1,16 +1,16 @@
 import { setIcon } from "obsidian";
 import { MediaMagicSettings } from "../settings";
-import { ProviderRegistry, Media, Status, RatingValue } from "../types";
+import { ProviderRegistry, Media, Status, RatingValue, MediaType } from "../types";
 import { App } from "obsidian";
 import { MediaImporter } from "../classes/MediaImporter";
 import { ImportMediaModal } from "./ImportMediaModal";
 import { MediaStatsModal } from "./MediaStatsModal";
-import { resolveRating } from "../functions";
+import { getStatusesForType, resolveRating } from "../functions";
 import { t } from "../i18n/i18n";
 
 export interface MediaFilters {
     query: string;
-    type: string;
+    type: MediaType;
     status: Status | null;
     rating: RatingValue | "unrated" | null;
 }
@@ -69,23 +69,16 @@ export class MediaHeader {
         this.typeSelect = bottom.createEl("select", { cls: "media-magic-select" });
         [
             { value: "anime", label: t("media.anime") },
-            { value: "manga", label: t("media.manga") }
+            { value: "manga", label: t("media.manga") },
         ].forEach(({ value, label }) => {
             const opt = this.typeSelect!.createEl("option", { text: label });
             opt.value = value;
-            if ((currentFilters.type ?? "") === value) opt.selected = true;
+            if (currentFilters.type === value) opt.selected = true;
         });
 
         // STATUS
         this.statusSelect = bottom.createEl("select", { cls: "media-magic-select" });
-        [
-            { value: "", label: t("status.all") },
-            ...Object.values(Status).map(s => ({ value: s, label: t(`status.${s}`) }))
-        ].forEach(({ value, label }) => {
-            const opt = this.statusSelect!.createEl("option", { text: label });
-            opt.value = value;
-            if ((currentFilters.status ?? "") === value) opt.selected = true;
-        });
+        this.buildStatusSelect(currentFilters.status, currentFilters.type);
 
         // RATING
         this.ratingSelect = bottom.createEl("select", { cls: "media-magic-select" });
@@ -106,7 +99,7 @@ export class MediaHeader {
         const emitFilters = () => {
             this.onFilter({
                 query: this.searchEl?.value ?? "",
-                type: this.typeSelect?.value || "anime",
+                type: (this.typeSelect?.value as MediaType) || "anime",
                 status: (this.statusSelect?.value as Status) || null,
                 rating: this.ratingSelect?.value
                     ? (this.ratingSelect.value === "unrated"
@@ -117,8 +110,34 @@ export class MediaHeader {
         };
 
         this.searchEl.addEventListener("input", emitFilters);
-        this.typeSelect.addEventListener("change", emitFilters);
+        this.typeSelect.addEventListener("change", () => {
+            const type = this.typeSelect!.value as MediaType;
+
+            this.buildStatusSelect(null, type);
+            emitFilters();
+        });
         this.statusSelect.addEventListener("change", emitFilters);
         this.ratingSelect.addEventListener("change", emitFilters);
+    }
+
+    private buildStatusSelect(currentStatus: Status | null, type: MediaType): void {
+        if (!this.statusSelect) return;
+
+        this.statusSelect.empty();
+
+        [
+            { value: "", label: t("status.all") },
+            ...getStatusesForType(type).map(status => ({
+                value: status,
+                label: t(`status.${status}`)
+            }))
+        ].forEach(({ value, label }) => {
+            const opt = this.statusSelect!.createEl("option", { text: label });
+            opt.value = value;
+
+            if ((currentStatus ?? "") === value) {
+                opt.selected = true;
+            }
+        });
     }
 }

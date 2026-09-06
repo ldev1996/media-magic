@@ -1,7 +1,7 @@
 import { App, Menu, Modal, TFile, setIcon } from "obsidian";
 import { Media, RatingValue, Status } from "../types";
 import { MediaMagicSettings } from "../settings";
-import { resolveMediaTitle, resolveRating, resolveStatusIcon } from "../functions";
+import { getStatusesForType, resolveMediaTitle, resolveRating, resolveStatusIcon } from "../functions";
 import { t } from "../i18n/i18n";
 
 class AliasModal extends Modal {
@@ -225,7 +225,7 @@ export class MediaCard {
     private openStatusMenu(media: Media, event: MouseEvent): void {
         const menu = new Menu();
 
-        for (const status of this.getAvailableStatuses(media)) {
+        for (const status of getStatusesForType(media.type)) {
             menu.addItem(item =>
                 item
                     .setTitle(t(`status.${status}`))
@@ -238,20 +238,6 @@ export class MediaCard {
         }
 
         menu.showAtMouseEvent(event);
-    }
-
-    private getAvailableStatuses(media: Media): Status[] {
-        return Object.values(Status).filter(status => {
-            if (media.type === "anime" && status === Status.Reading) {
-                return false;
-            }
-
-            if (media.type === "manga" && status === Status.Watching) {
-                return false;
-            }
-
-            return true;
-        });
     }
 
     private async updateFrontmatter(

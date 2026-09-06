@@ -1,4 +1,4 @@
-import { Media, RatingValue, Status } from "./types";
+import { Media, MediaType, RatingValue, Status } from "./types";
 import { MediaMagicSettings, RatingDisplay, TitleLanguage } from "./settings";
 
 const EMOJIS = ["🤮", "☹️", "😐", "🙂", "😍"] as const;
@@ -52,4 +52,27 @@ export function resolveStatusIcon(status: Status): string {
 
 export function resolveRating(rating: RatingValue, display: RatingDisplay) {
     return ratingResolvers[display](rating);
+}
+
+export function getStatusesForType(type: MediaType): Status[] {
+    switch (type) {
+        case "anime":
+            return [
+                Status.Planned,
+                Status.Watching,
+                Status.Waiting,
+                Status.Dropped,
+                Status.Completed,
+            ];
+        case "manga":
+            return [
+                Status.Planned,
+                Status.Reading,
+                Status.Waiting,
+                Status.Dropped,
+                Status.Completed,
+            ];
+        default:
+            return [];
+    }
 }
