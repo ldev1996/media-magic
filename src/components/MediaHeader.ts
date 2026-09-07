@@ -1,6 +1,6 @@
 import { setIcon } from "obsidian";
 import { MediaMagicSettings } from "../settings";
-import { ProviderRegistry, Media, Status, RatingValue, MediaType } from "../types";
+import { ProviderRegistry, Media, Status, RatingValue, MediaType, RATING_VALUES } from "../types";
 import { App } from "obsidian";
 import { MediaImporter } from "../classes/MediaImporter";
 import { ImportMediaModal } from "./ImportMediaModal";
@@ -82,18 +82,31 @@ export class MediaHeader {
         this.buildStatusSelect(currentFilters.status, currentFilters.type);
 
         // RATING
-        this.ratingSelect = bottom.createEl("select", { cls: "media-magic-select" });
+        this.ratingSelect = bottom.createEl("select", {
+            cls: "media-magic-select"
+        });
+
         [
             { value: "", label: t("rating.all") },
             { value: "unrated", label: t("rating.none") },
-            ...[5, 4, 3, 2, 1].map(i => ({
-                value: String(i),
-                label: resolveRating(i as RatingValue, this.settings.ratingDisplay)
+
+            ...RATING_VALUES.map(rating => ({
+                value: String(rating),
+                label: resolveRating(
+                    rating,
+                    this.settings.ratingDisplay
+                )
             }))
         ].forEach(({ value, label }) => {
-            const opt = this.ratingSelect!.createEl("option", { text: label });
+            const opt = this.ratingSelect!.createEl("option", {
+                text: label
+            });
+
             opt.value = value;
-            if ((currentFilters.rating ?? "") === value) opt.selected = true;
+
+            if ((currentFilters.rating ?? "") === value) {
+                opt.selected = true;
+            }
         });
 
         // EMIT — lê todos os elementos no momento do evento

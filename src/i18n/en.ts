@@ -39,11 +39,10 @@ export default {
     },
 
     RatingDisplay: {
-        numeric: "Numeric",
         emoji: "Emoji",
-        stars: "Stars",
-        tier: "Tier",
-        // word: "Word",
+        word: "Word",
+        emojiWord: "Emoji + Word",
+        number: "Number",
     },
 
     titleLanguage: {
@@ -81,7 +80,7 @@ export default {
     },
 
     status: {
-        all: "All",
+        all: "All Statuses",
         watching: "Watching",
         reading: "Reading",
         playing: "Playing",
@@ -94,8 +93,18 @@ export default {
     },
 
     rating: {
-        all: "All",
+        all: "All Ratings",
         none: "Unrated",
+        1: "Terrible",
+        2: "Bad",
+        3: "Weak",
+        4: "Meh",
+        5: "Okay",
+        6: "Decent",
+        7: "Good",
+        8: "Great",
+        9: "Awesome",
+        10: "Masterpiece",
     },
 
     card: {

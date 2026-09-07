@@ -1,5 +1,5 @@
 import { App, Menu, Modal, TFile, setIcon } from "obsidian";
-import { Media, RatingValue, Status } from "../types";
+import { Media, RATING_VALUES, RatingValue, Status } from "../types";
 import { MediaMagicSettings } from "../settings";
 import { getStatusesForType, resolveMediaTitle, resolveRating, resolveStatusIcon } from "../functions";
 import { t } from "../i18n/i18n";
@@ -152,16 +152,16 @@ export class MediaCard {
 
         menu.addItem(item =>
             item
-                .setTitle(t("card.setRating"))
-                .setIcon("star")
-                .onClick(() => this.openRatingMenu(media, event))
+                .setTitle(t("card.setStatus"))
+                .setIcon("circle")
+                .onClick(() => this.openStatusMenu(media, event))
         );
 
         menu.addItem(item =>
             item
-                .setTitle(t("card.setStatus"))
-                .setIcon("circle")
-                .onClick(() => this.openStatusMenu(media, event))
+                .setTitle(t("card.setRating"))
+                .setIcon("star")
+                .onClick(() => this.openRatingMenu(media, event))
         );
 
         menu.addSeparator();
@@ -192,14 +192,19 @@ export class MediaCard {
     private openRatingMenu(media: Media, event: MouseEvent): void {
         const menu = new Menu();
 
-        for (let i = 5; i >= 1; i--) {
+        for (const rating of RATING_VALUES) {
             menu.addItem(item =>
                 item
-                    .setTitle(resolveRating(i as RatingValue, this.settings.ratingDisplay))
-                    .setChecked(media.rating === i)
+                    .setTitle(
+                        resolveRating(
+                            rating,
+                            this.settings.ratingDisplay
+                        )
+                    )
+                    .setChecked(media.rating === rating)
                     .onClick(async () => {
                         await this.updateFrontmatter(media, {
-                            rating: i as RatingValue
+                            rating
                         });
                     })
             );

@@ -1,8 +1,26 @@
 import { Media, MediaType, RatingValue, Status } from "./types";
 import { MediaMagicSettings, RatingDisplay, TitleLanguage } from "./settings";
+import { t, TranslationKey } from "./i18n/i18n";
 
-const EMOJIS = ["🤮", "☹️", "😐", "🙂", "😍"] as const;
-const TIERS = ["D", "C", "B", "A", "S"] as const;
+const EMOJIS = [
+    "💀",
+    "😓",
+    "🙁",
+    "😐",
+    "😶",
+    "🙂",
+    "😀",
+    "😎",
+    "😍",
+    "🏆"
+] as const;
+
+const getRatingWord = (rating: RatingValue): string =>
+    t(`rating.${rating}` as TranslationKey);
+
+function getRatingEmoji(rating: RatingValue): string {
+    return EMOJIS[rating - 1]!;
+}
 
 const titleResolvers = {
     [TitleLanguage.English]: (m: Media) =>
@@ -16,17 +34,14 @@ const titleResolvers = {
 } satisfies Record<TitleLanguage, (m: Media) => string>;
 
 const ratingResolvers = {
-    stars: (r: RatingValue) =>
-        "★".repeat(r) + "☆".repeat(5 - r),
-
+    word: (r: RatingValue) =>
+        getRatingWord(r),
     emoji: (r: RatingValue) =>
-        `${EMOJIS[r - 1]}`,
-
-    tier: (r: RatingValue) =>
-        `${TIERS[r - 1]}-tier`,
-
-    numeric: (r: RatingValue) =>
-        `${r}/5`,
+        getRatingEmoji(r),
+    emoji_word: (r: RatingValue) =>
+        `${getRatingEmoji(r)} ${getRatingWord(r)}`,
+    number: (r: RatingValue) =>
+        `${r}`,
 } satisfies Record<RatingDisplay, (r: RatingValue) => string>;
 
 const statusIcons = {

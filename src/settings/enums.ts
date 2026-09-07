@@ -1,8 +1,8 @@
 export enum RatingDisplay {
-    Numeric = "numeric",
+    Word = "word",
     Emoji = "emoji",
-    Stars = "stars",
-    Tier = "tier"
+    EmojiWord = "emoji_word",
+    Number = "number",
 }
 
 export enum OnDuplicateAction {

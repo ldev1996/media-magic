@@ -163,20 +163,20 @@ export class MediaMagicSettingTab extends PluginSettingTab {
             .addDropdown(dropdown =>
                 dropdown
                     .addOption(
-                        RatingDisplay.Numeric,
-                        t("RatingDisplay.numeric")
-                    )
-                    .addOption(
                         RatingDisplay.Emoji,
                         t("RatingDisplay.emoji")
                     )
                     .addOption(
-                        RatingDisplay.Stars,
-                        t("RatingDisplay.stars")
+                        RatingDisplay.Word,
+                        t("RatingDisplay.word")
                     )
                     .addOption(
-                        RatingDisplay.Tier,
-                        t("RatingDisplay.tier")
+                        RatingDisplay.EmojiWord,
+                        t("RatingDisplay.emojiWord")
+                    )
+                    .addOption(
+                        RatingDisplay.Number,
+                        t("RatingDisplay.number")
                     )
                     .setValue(this.plugin.settings.ratingDisplay)
                     .onChange(async value => {

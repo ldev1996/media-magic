@@ -1,5 +1,5 @@
 import { App, Modal, setIcon } from "obsidian";
-import { Media, Status, RatingValue, MediaType } from "../types";
+import { Media, Status, RatingValue, MediaType, RATING_VALUES } from "../types";
 import { resolveStatusIcon, resolveRating } from "../functions";
 import { MediaMagicSettings } from "../settings";
 import { t } from "../i18n/i18n";
@@ -38,14 +38,13 @@ export class MediaStatsModal extends Modal {
             game: 0,
         };
 
-        const byRating: Record<RatingValue | "unrated", number> = {
-            "unrated": 0,
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-        };
+        const byRating = {} as Record<RatingValue | "unrated", number>;
+
+        byRating.unrated = 0;
+
+        for (const rating of RATING_VALUES) {
+            byRating[rating] = 0;
+        }
 
         const byStatus: Record<Status, number> = {
             [Status.Watching]: 0,

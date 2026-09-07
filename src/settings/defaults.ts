@@ -14,7 +14,7 @@ export const DEFAULT_SETTINGS: MediaMagicSettings = {
     onDuplicate: OnDuplicateAction.Ask,
 
     // Display
-    ratingDisplay: RatingDisplay.Stars,
+    ratingDisplay: RatingDisplay.Number,
     titleLanguage: TitleLanguage.Canonical,
     defaultMediaType: "anime",
 
