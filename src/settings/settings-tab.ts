@@ -221,7 +221,7 @@ export class MediaMagicSettingTab extends PluginSettingTab {
                 dropdown
                     .addOption("anime", t("media.anime"))
                     .addOption("manga", t("media.manga"))
-                    // .addOption("game", t("media.game"))
+                    .addOption("game", t("media.game"))
                     .setValue(this.plugin.settings.defaultMediaType)
                     .onChange(async value => {
                         this.plugin.settings.defaultMediaType = value as MediaType;

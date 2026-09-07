@@ -46,10 +46,12 @@ export class MediaRepository {
     private isInMediaFolder(filePath: string): boolean {
         const animeFolder = this.settings.animeFolder.replace(/\/+$/, "");
         const mangaFolder = this.settings.mangaFolder.replace(/\/+$/, "");
+        const gamesFolder = this.settings.gamesFolder.replace(/\/+$/, "");
 
         return (
             filePath.startsWith(animeFolder + "/") ||
-            filePath.startsWith(mangaFolder + "/")
+            filePath.startsWith(mangaFolder + "/") ||
+            filePath.startsWith(gamesFolder + "/")
         );
     }
 }

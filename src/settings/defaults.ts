@@ -10,7 +10,7 @@ export const DEFAULT_SETTINGS: MediaMagicSettings = {
     // Files
     animeFolder: "Media/Anime",
     mangaFolder: "Media/Manga",
-    gamesFolder: "Media/Game",
+    gamesFolder: "Media/Games",
     onDuplicate: OnDuplicateAction.Ask,
 
     // Display
