@@ -1,15 +1,18 @@
 import { MediaMagicSettings } from "./settings";
 
 export enum Status {
-    Planned = "planned",
-    Reading = "reading",
     Watching = "watching",
+    Reading = "reading",
+    Playing = "playing",
+    Planned = "planned",
+    OnHold = "on_hold",
     Waiting = "waiting",
     Dropped = "dropped",
-    Completed = "completed"
+    Completed = "completed",
+    Completed100 = "completed_100",
 }
 
-export type MediaType = "anime" | "manga"
+export type MediaType = "anime" | "manga" | "game"
 
 export type RatingValue = 1 | 2 | 3 | 4 | 5;
 

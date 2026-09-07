@@ -1,9 +1,10 @@
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import { MEDIA_VIEW_TYPE, MediaView } from '../components/MediaView';
 import MediaMagicPlugin from '../main';
 import { MediaType } from '../types';
 import { CoverMode, OnDuplicateAction, RatingDisplay, TitleLanguage } from './enums';
 import { t } from '../i18n/i18n';
+import { IGDBClient } from '../classes/IGDBClient';
 
 export class MediaMagicSettingTab extends PluginSettingTab {
     plugin: MediaMagicPlugin;
@@ -34,6 +35,60 @@ export class MediaMagicSettingTab extends PluginSettingTab {
                     })
             });
 
+        new Setting(containerEl)
+            .setName(t("settings.igdbClientId"))
+            .addText(text =>
+                text
+                    .setPlaceholder(t("settings.igdbClientId"))
+                    .setValue(this.plugin.settings.igdbClientId)
+                    .onChange(async value => {
+                        this.plugin.settings.igdbClientId = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(containerEl)
+            .setName(t("settings.igdbClientSecret"))
+            .addText(text =>
+                text
+                    .setPlaceholder(t("settings.igdbClientSecret"))
+                    .setValue(this.plugin.settings.igdbClientSecret)
+                    .onChange(async value => {
+                        this.plugin.settings.igdbClientSecret = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(containerEl)
+            .setName(t("settings.testConnection"))
+            .setDesc(t("settingsDesc.testConnection"))
+            .addButton(button =>
+                button
+                    .setButtonText(t("settings.testConnection"))
+                    .onClick(async () => {
+                        button.setDisabled(true);
+                        button.setButtonText(t("igdb.testingConnection"));
+
+                        try {
+                            const client = new IGDBClient(
+                                this.plugin.settings.igdbClientId,
+                                this.plugin.settings.igdbClientSecret
+                            );
+
+                            await client.authenticate();
+
+                            new Notice(t("igdb.connectionSuccessful"));
+                        } catch (error) {
+                            console.error("IGDB connection failed:", error);
+
+                            new Notice(t("igdb.connectionFailed"));
+                        } finally {
+                            button.setDisabled(false);
+                            button.setButtonText(t("settings.testConnection"));
+                        }
+                    })
+            );
+
         // -------------------------------------------- Files
         containerEl.createEl("h2", {
             text: t("settings.files")
@@ -59,6 +114,18 @@ export class MediaMagicSettingTab extends PluginSettingTab {
                     .setValue(this.plugin.settings.mangaFolder)
                     .onChange(async value => {
                         this.plugin.settings.mangaFolder = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(containerEl)
+            .setName(t("settings.gamesFolder"))
+            .addText(text =>
+                text
+                    .setPlaceholder("Media/Games")
+                    .setValue(this.plugin.settings.gamesFolder)
+                    .onChange(async value => {
+                        this.plugin.settings.gamesFolder = value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -213,6 +280,18 @@ export class MediaMagicSettingTab extends PluginSettingTab {
                         .setValue(this.plugin.settings.mangaCoversFolder)
                         .onChange(async value => {
                             this.plugin.settings.mangaCoversFolder = value;
+                            await this.plugin.saveSettings();
+                        })
+                );
+
+            new Setting(containerEl)
+                .setName(t("settings.gamesCoversFolder"))
+                .addText(text =>
+                    text
+                        .setPlaceholder("Media/Covers/Games")
+                        .setValue(this.plugin.settings.gamesCoversFolder)
+                        .onChange(async value => {
+                            this.plugin.settings.gamesCoversFolder = value;
                             await this.plugin.saveSettings();
                         })
                 );

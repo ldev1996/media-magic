@@ -2,11 +2,9 @@ import { Plugin } from "obsidian";
 import { DEFAULT_SETTINGS, MediaMagicSettings, MediaMagicSettingTab } from "./settings";
 import { ImportMediaModal } from "./components/ImportMediaModal";
 import { ProviderRegistry } from "./types";
-import { MyAnimeListAnimeProvider } from "./providers/MyAnimeListAnimeProvider";
+import { MyAnimeListAnimeProvider, AniListAnimeProvider, AniListMangaProvider, IGDBGameProvider } from "./providers";
 import { MediaImporter } from "./classes/MediaImporter";
-import { AniListAnimeProvider } from "./providers/AniListAnimeProvider";
 import { MEDIA_VIEW_TYPE, MediaView } from "./components/MediaView";
-import { AniListMangaProvider } from "./providers/AniListMangaProvider";
 import { initI18n } from "./i18n/i18n";
 
 export default class MediaMagicPlugin extends Plugin {
@@ -23,6 +21,7 @@ export default class MediaMagicPlugin extends Plugin {
 		this.providerRegistry.register(new AniListAnimeProvider);
 		this.providerRegistry.register(new MyAnimeListAnimeProvider);
 		this.providerRegistry.register(new AniListMangaProvider);
+		this.providerRegistry.register(new IGDBGameProvider(this.settings));
 
 		// -------------------------------------------- Settings
 		this.addSettingTab(

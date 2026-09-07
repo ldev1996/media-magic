@@ -7,10 +7,13 @@ export default {
         misc: "Misc",
 
         showAdultContent: "Show Adult Content",
+        igdbClientId: "IGDB Client ID",
+        igdbClientSecret: "IGDB Client Secret",
+        testConnection: "Test Connection",
 
         animeFolder: "Anime Folder",
         mangaFolder: "Manga Folder",
-        // gameFolder: "Game Folder",
+        gamesFolder: "Game Folder",
         onDuplicate: "On Duplicate",
 
         ratingDisplay: "Rating Display",
@@ -20,9 +23,13 @@ export default {
         coverMode: "Cover Mode",
         animeCoversFolder: "Anime Covers Folder",
         mangaCoversFolder: "Manga Covers Folder",
-        // gamesCoversFolder: "Games Covers Folder",
+        gamesCoversFolder: "Games Covers Folder",
 
         openOnStartup: "Open on Startup",
+    },
+
+    settingsDesc: {
+        testConnection: "Verify that your IGDB credentials are valid.",
     },
 
     onDuplicate: {
@@ -54,7 +61,7 @@ export default {
     media: {
         anime: "Anime",
         manga: "Manga",
-        // game: "Game",
+        game: "Game",
     },
 
     import: {
@@ -63,17 +70,27 @@ export default {
         searchPlaceholder: "Search…",
         searching: "Searching…",
         import: "Import",
-        imported: "{title} successfully imported!"
+        imported: "{title} successfully imported!",
+        importError: "Import failed!",
+    },
+
+    igdb: {
+        testingConnection: "Testing...",
+        connectionSuccessful: "IGDB connection successful.",
+        connectionFailed: "IGDB connection failed.",
     },
 
     status: {
         all: "All",
-        planned: "Planned",
-        reading: "Reading",
         watching: "Watching",
+        reading: "Reading",
+        playing: "Playing",
+        planned: "Planned",
+        on_hold: "On Hold",
         waiting: "Waiting",
         dropped: "Dropped",
         completed: "Completed",
+        completed_100: "100% Completed",
     },
 
     rating: {
@@ -102,7 +119,8 @@ export default {
     error: {
         noProvider: "No provider selected!",
         searchError: "Search failed!",
-        importError: "Import failed!",
         noResults: "There're no results for your search!",
+        igdbClientRequired: "IGDB Client ID and Client Secret are required!",
+        igdbAuthError: "IGDB authentication failed with status {status}!",
     },
 } as const;

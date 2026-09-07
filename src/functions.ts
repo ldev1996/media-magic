@@ -33,9 +33,12 @@ const statusIcons = {
     [Status.Planned]: "circle",
     [Status.Reading]: "book-open",
     [Status.Watching]: "play",
+    [Status.Playing]: "gamepad-2",
     [Status.Waiting]: "clock",
+    [Status.OnHold]: "pause",
     [Status.Dropped]: "x",
     [Status.Completed]: "check",
+    [Status.Completed100]: "trophy",
 } satisfies Record<Status, string>;
 
 // ---------------------------------------------------- Export Functions
@@ -58,19 +61,31 @@ export function getStatusesForType(type: MediaType): Status[] {
     switch (type) {
         case "anime":
             return [
-                Status.Planned,
                 Status.Watching,
+                Status.Planned,
+                Status.OnHold,
                 Status.Waiting,
                 Status.Dropped,
                 Status.Completed,
             ];
         case "manga":
             return [
-                Status.Planned,
                 Status.Reading,
+                Status.Planned,
+                Status.OnHold,
                 Status.Waiting,
                 Status.Dropped,
                 Status.Completed,
+            ];
+        case "game":
+            return [
+                Status.Playing,
+                Status.Planned,
+                Status.OnHold,
+                Status.Waiting,
+                Status.Dropped,
+                Status.Completed,
+                Status.Completed100,
             ];
         default:
             return [];

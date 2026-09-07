@@ -35,6 +35,7 @@ export class MediaStatsModal extends Modal {
         const byType: Record<MediaType, number> = {
             anime: 0,
             manga: 0,
+            game: 0,
         };
 
         const byRating: Record<RatingValue | "unrated", number> = {
@@ -49,10 +50,13 @@ export class MediaStatsModal extends Modal {
         const byStatus: Record<Status, number> = {
             [Status.Watching]: 0,
             [Status.Reading]: 0,
-            [Status.Completed]: 0,
-            [Status.Dropped]: 0,
+            [Status.Playing]: 0,
             [Status.Planned]: 0,
+            [Status.OnHold]: 0,
             [Status.Waiting]: 0,
+            [Status.Dropped]: 0,
+            [Status.Completed]: 0,
+            [Status.Completed100]: 0,
         };
 
         for (const m of this.media) {

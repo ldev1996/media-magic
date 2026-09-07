@@ -4,10 +4,13 @@ import { RatingDisplay, OnDuplicateAction, CoverMode, TitleLanguage } from './en
 export interface MediaMagicSettings {
 	// Query
 	showAdult: boolean;
+	igdbClientId: string;
+	igdbClientSecret: string;
 
 	// Files
 	animeFolder: string;
 	mangaFolder: string;
+	gamesFolder: string;
 	onDuplicate: OnDuplicateAction;
 
 	// Display
@@ -19,6 +22,7 @@ export interface MediaMagicSettings {
 	coverMode: CoverMode;
 	animeCoversFolder: string;
 	mangaCoversFolder: string;
+	gamesCoversFolder: string;
 
 	// Misc
 	openOnStartup: boolean;

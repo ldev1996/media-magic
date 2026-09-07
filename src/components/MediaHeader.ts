@@ -70,6 +70,7 @@ export class MediaHeader {
         [
             { value: "anime", label: t("media.anime") },
             { value: "manga", label: t("media.manga") },
+            { value: "game", label: t("media.game") },
         ].forEach(({ value, label }) => {
             const opt = this.typeSelect!.createEl("option", { text: label });
             opt.value = value;

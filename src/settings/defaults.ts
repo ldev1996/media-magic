@@ -4,10 +4,13 @@ import { MediaMagicSettings } from "./settings";
 export const DEFAULT_SETTINGS: MediaMagicSettings = {
     // Query
     showAdult: false,
+    igdbClientId: "",
+    igdbClientSecret: "",
 
     // Files
     animeFolder: "Media/Anime",
     mangaFolder: "Media/Manga",
+    gamesFolder: "Media/Game",
     onDuplicate: OnDuplicateAction.Ask,
 
     // Display
@@ -19,6 +22,7 @@ export const DEFAULT_SETTINGS: MediaMagicSettings = {
     coverMode: CoverMode.Link,
     animeCoversFolder: "Media/Covers/Anime",
     mangaCoversFolder: "Media/Covers/Manga",
+    gamesCoversFolder: "Media/Covers/Games",
 
     // Misc
     openOnStartup: false,

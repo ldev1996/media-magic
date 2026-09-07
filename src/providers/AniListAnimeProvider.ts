@@ -13,9 +13,6 @@ export class AniListAnimeProvider implements MediaProvider {
     readonly name = "AniList (Anime)";
     readonly type = "anime" as const;
 
-    /**
-     * SEARCH
-     */
     async search(query: string, settings: MediaMagicSettings): Promise<MediaSearchResult[]> {
         const adultFilter = settings.showAdult ? "" : ", isAdult: false";
 

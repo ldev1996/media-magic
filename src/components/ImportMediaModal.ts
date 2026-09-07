@@ -305,7 +305,7 @@ export class ImportMediaModal extends Modal {
             console.error(error);
 
             new Notice(
-                t("error.importError")
+                t("import.importError")
             );
         }
     }
