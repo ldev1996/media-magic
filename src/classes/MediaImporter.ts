@@ -44,9 +44,16 @@ export class MediaImporter {
     }
 
     private resolveFolder(media: Media): string {
-        return media.type === "anime"
-            ? this.settings.animeFolder
-            : this.settings.mangaFolder;
+        switch (media.type) {
+            case "anime":
+                return this.settings.animeFolder;
+
+            case "manga":
+                return this.settings.mangaFolder;
+
+            case "game":
+                return this.settings.gamesFolder;
+        }
     }
 
     private buildFilePath(media: Media, folder: string): string {

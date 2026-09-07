@@ -20,9 +20,9 @@ export const DEFAULT_SETTINGS: MediaMagicSettings = {
 
     // Covers
     coverMode: CoverMode.Link,
-    animeCoversFolder: "Media/Covers/Anime",
-    mangaCoversFolder: "Media/Covers/Manga",
-    gamesCoversFolder: "Media/Covers/Games",
+    animeCoversFolder: "Covers/Anime",
+    mangaCoversFolder: "Covers/Manga",
+    gamesCoversFolder: "Covers/Games",
 
     // Misc
     openOnStartup: false,
