@@ -138,7 +138,7 @@ export class MediaStatsModal extends Modal {
         ][]) {
             const label =
                 key === "unrated"
-                    ? t("rating.none")
+                    ? t("rating.unrated")
                     : resolveRating(key, this.settings.ratingDisplay);
 
             this.createCard(grid, label, value);

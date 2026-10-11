@@ -80,7 +80,7 @@ export default {
     },
 
     status: {
-        all: "Todos os Status",
+        all: "Qualquer Status",
         watching: "Assistindo",
         reading: "Lendo",
         playing: "Jogando",
@@ -93,8 +93,9 @@ export default {
     },
 
     rating: {
-        all: "Todas as Avaliações",
-        none: "Não avaliado",
+        all: "Qualquer Avaliação",
+        unrated: "Não avaliado",
+        rated: "Avaliado",
         1: "Terrível",
         2: "Ruim",
         3: "Fraco",

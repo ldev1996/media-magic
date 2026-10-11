@@ -12,7 +12,7 @@ export interface MediaFilters {
     query: string;
     type: MediaType;
     status: Status | null;
-    rating: RatingValue | "unrated" | null;
+    rating: RatingValue | "unrated" | "rated" | null;
 }
 
 export class MediaHeader {
@@ -88,7 +88,8 @@ export class MediaHeader {
 
         [
             { value: "", label: t("rating.all") },
-            { value: "unrated", label: t("rating.none") },
+            { value: "unrated", label: t("rating.unrated") },
+            { value: "rated", label: t("rating.rated") },
 
             ...RATING_VALUES.map(rating => ({
                 value: String(rating),
@@ -111,17 +112,22 @@ export class MediaHeader {
 
         // EMIT — lê todos os elementos no momento do evento
         const emitFilters = () => {
+            const ratingValue = this.ratingSelect?.value ?? "";
+
+            const rating: MediaFilters["rating"] =
+                ratingValue === ""
+                    ? null
+                    : ratingValue === "unrated" || ratingValue === "rated"
+                        ? ratingValue
+                        : Number(ratingValue) as RatingValue;
+
             this.onFilter({
                 query: this.searchEl?.value ?? "",
                 type: (this.typeSelect?.value as MediaType) || "anime",
                 status: (this.statusSelect?.value as Status) || null,
-                rating: this.ratingSelect?.value
-                    ? (this.ratingSelect.value === "unrated"
-                        ? "unrated"
-                        : Number(this.ratingSelect.value) as RatingValue)
-                    : null
+                rating
             });
-        };
+        }
 
         this.searchEl.addEventListener("input", emitFilters);
         this.typeSelect.addEventListener("change", () => {

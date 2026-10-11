@@ -114,37 +114,22 @@ export class MediaView extends ItemView {
     }
 
     private getFilteredMedia(): Media[] {
+        const { query, type, status, rating } = this.filters;
+        const q = query.toLowerCase();
+
         return this.allMedia.filter(m => {
-            if (this.filters.query) {
-                const q = this.filters.query.toLowerCase();
+            if (
+                q &&
+                ![m.alias, m.title, m.englishTitle, m.nativeTitle]
+                    .some(title => title?.toLowerCase().includes(q))
+            ) return false;
 
-                const match = [
-                    m.alias,
-                    m.title,
-                    m.englishTitle,
-                    m.nativeTitle
-                ]
-                    .filter(Boolean)
-                    .some(t => t!.toLowerCase().includes(q));
+            if (type && m.type !== type) return false;
+            if (status && m.status !== status) return false;
 
-                if (!match) return false;
-            }
-
-            if (this.filters.type && m.type !== this.filters.type) {
-                return false;
-            }
-
-            if (this.filters.status && m.status !== this.filters.status) {
-                return false;
-            }
-
-            if (this.filters.rating !== null) {
-                if (this.filters.rating === "unrated") {
-                    if (m.rating) return false;
-                } else {
-                    if (m.rating !== this.filters.rating) return false;
-                }
-            }
+            if (rating === "unrated") return !m.rating;
+            if (rating === "rated") return !!m.rating;
+            if (rating !== null && m.rating !== rating) return false;
 
             return true;
         });
