@@ -14,10 +14,10 @@ export enum Status {
 
 export type MediaType = "anime" | "manga" | "game"
 
-export type RatingValue = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+export type RatingValue = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export const RATING_VALUES: RatingValue[] = [
-    10, 9, 8, 7, 6, 5, 4, 3, 2, 1
+    7, 6, 5, 4, 3, 2, 1
 ];
 
 export interface Media {

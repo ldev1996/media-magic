@@ -7,12 +7,9 @@ const EMOJIS = [
     "😓",
     "🙁",
     "😐",
-    "😶",
     "🙂",
-    "😀",
     "😎",
     "😍",
-    "🏆"
 ] as const;
 
 const getRatingWord = (rating: RatingValue): string =>

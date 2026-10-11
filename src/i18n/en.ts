@@ -98,13 +98,10 @@ export default {
         1: "Terrible",
         2: "Bad",
         3: "Weak",
-        4: "Meh",
-        5: "Okay",
-        6: "Decent",
-        7: "Good",
-        8: "Great",
-        9: "Awesome",
-        10: "Masterpiece",
+        4: "Okay",
+        5: "Good",
+        7: "Great",
+        8: "Awesome",
     },
 
     card: {
