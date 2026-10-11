@@ -100,8 +100,8 @@ export default {
         3: "Weak",
         4: "Okay",
         5: "Good",
-        7: "Great",
-        8: "Awesome",
+        6: "Great",
+        7: "Awesome",
     },
 
     card: {
